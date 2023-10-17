@@ -1,0 +1,530 @@
+﻿@* prison *@
+
+<meta charset="utf-8" />
+
+<!-- Option 1: Include in HTML -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+<link href="~/StyleSheet.css" rel="stylesheet" />
+@* nav *@
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<MOMAAPP.Models.prisontable>
+@using Microsoft.AspNetCore.Http;
+<style>
+    .form-check-input-reverse {
+        margin-left: 2px;
+    }
+</style>
+@* nav *@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    @*<a class="navbar-brand" href="#">@ViewBag.username</a>*@
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">@TempData["username"]<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">@TempData["office"]<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#"
+                   style="float: right; font-family: 'Noto Kufi Arabic'"
+                   id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ڕاپۆرت
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" asp-action="EmployeeSalaryInfo"
+                       asp-controller="Prison" style=" font-family:'Noto Naskh Arabic'"
+                       target="_blank">زانيارى</a>
+                    <a class="dropdown-item" href="#"></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"></a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="#">
+                    <div class="form-group col-md-12">
+                        <label></label>
+
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home"
+                   style="float:right;font-family:Calibri">
+                    <span class="bi bi-box-arrow-left" data-toggle="tooltip"
+                          data-placement="top" title="Sign Out‌" aria-hidden="true"></span>
+
+                </a>
+            </li>
+        </ul>
+        @*<form class="form-inline my-2 my-lg-0" dir="rtl">
+                <input class="form-control mr-sm-2" style="margin-left:2px"
+                       type="search" placeholder="Search Code" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>*@
+        @*  *@
+        <form asp-action="Edit" method="get" class="form-inline my-2 my-lg-0" dir="rtl">
+            <div class="form-actions no-color">
+                <p>
+
+                    <input type="text"  style="margin-left: 2px; font-family:'Noto Naskh Arabic'" name="code"
+                           class="form-control mr-sm-2"  />
+                    <input type="submit" value="Update" class="btn btn-default" /> |
+
+                    <input type="submit" value="Delete" asp-action="Delete" class="btn btn-default" />
+
+                </p>
+            </div>
+
+        </form>
+
+    </div>
+</nav>
+<hr />
+@* fields *@
+<form dir="rtl" method="post" enctype="multipart/form-data" asp-controller="Prison" asp-action="UploadFile">
+    @* 1 *@
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <label for="inputEmail1" style="float: right; font-family: 'Noto Kufi Arabic'">كۆد‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="code"
+                   id="inputEmail1">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail2" style="float: right; font-family: 'Noto Kufi Arabic' ">ناوى زيندانى كراو-گيراوى سياسى‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="NameZ"
+                   id="inputEmail2">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail3" style="float: right; font-family: 'Noto Kufi Arabic'">ناو‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="f1"
+                   id="inputEmail3">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail4" style="float:right; font-family: 'Noto Kufi Arabic'">ناوى باوك‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="f2"
+                   id="inputEmail4">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail5" style="float:right; font-family: 'Noto Kufi Arabic'">ناوى باپير‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="f3"
+                   id="inputEmail5">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail6" style="float:right; font-family: 'Noto Kufi Arabic'">باوكى باپير‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="f4"
+                   id="inputEmail6">
+        </div>
+    </div>
+    @* 2 *@
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <label for="inputEmail7" style="float:right; font-family: 'Noto Kufi Arabic'">ڕه‌گه‌ز‌:</label>
+            @*<input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control"
+                id="inputEmail4">*@
+            <select name="gender" value="Gender" class="form-control">
+                <option value=""></option>
+                <option value="نێر">نێر</option>
+                <option value="مێ">مێ</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail8" style="float:right; font-family: 'Noto Kufi Arabic'">ناوى دايك‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="MotherName"
+                   id="inputEmail8">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail9" style="float:right; font-family: 'Noto Kufi Arabic'">باوكى دايك‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="m2"
+                   id="inputEmail9">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail10" style="float:right; font-family: 'Noto Kufi Arabic'">باپيرى دايك‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="m3"
+                   id="inputEmail10">
+        </div>
+        <div class="form-group col-md-1">
+            <label for="inputEmail11" style="float:right; font-family: 'Noto Kufi Arabic'">نه‌ته‌وه‌‌:</label>
+            @*<input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control"
+                id="inputEmail4">*@
+            <select name="nation" value="nation" class="form-control">
+                <option value=""></option>
+                <option value="كورد">كورد</option>
+                <option value="عرب">عرب</option>
+                <option value="كلد و ئاشور">كلد و ئاشور</option>
+                <option value="سريانى">سريانى</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail12" style="float:right; font-family: 'Noto Kufi Arabic'">ژ.كارتى نيشتمانى‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="kartMeli"
+                   id="inputEmail12">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail13" style="float:right; font-family: 'Noto Kufi Arabic'">ژماره‌ى هاوڵاتى/UPN‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="upn"
+                   id="inputEmail13">
+        </div>
+    </div>
+    @* 3 *@
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="inputEmail14" style="float:right; font-family: 'Noto Kufi Arabic'">شهاده‌جنسيه‌(ڕه‌گه‌زنامه‌)‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="jnsya"
+                   id="inputEmail14">
+        </div>
+        <div class="form-group col-md-2">
+     <label for="inputEmail15" style="float:right; font-family: 'Noto Kufi Arabic'">ن. بارى شارستانى‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="nfus"
+                   id="inputEmail15">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail16" style="float:right; font-family: 'Noto Kufi Arabic'">شوێنى ده‌رچوون‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="placenfus"
+                   id="inputEmail16">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail17" style="float:right; font-family: 'Noto Kufi Arabic'">به‌روارى ده‌رچوون‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="datenfus"
+                   id="inputEmail17">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail18" style="float:right; font-family: 'Noto Kufi Arabic'">سجل‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="sjl"
+                   id="inputEmail18">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail19" style="float:right; font-family: 'Noto Kufi Arabic'">صحيفه‌‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="sahifa"
+                   id="inputEmail19">
+        </div>
+    </div>
+    @* 2 *@
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="inputEmail20" style="float:right; font-family: 'Noto Kufi Arabic'">ناوى وارس‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="Miratgr"
+                   id="inputEmail20">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail21" style="float:right; font-family: 'Noto Kufi Arabic'">ناو‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="w1"
+                   id="inputEmail21">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail22" style="float:right; font-family: 'Noto Kufi Arabic'">ناوى باوك‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="w2"
+                   id="inputEmail22">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail23" style="float:right; font-family: 'Noto Kufi Arabic'">ناوى باپير‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="w3"
+                   id="inputEmail23">
+        </div>
+        <div class="form-group col-md-1">
+            <label for="inputEmail24" style="float:right; font-family: 'Noto Kufi Arabic'">په‌يوه‌ندى:</label>
+            <select name="paywandi" value="paywandi" class="form-control">
+                <option value=""></option>
+                <option value="خۆدى">خۆدى</option>
+                <option value="برا">برا</option>
+                <option value="هاوسه‌ر ">هاوسه‌ر </option>
+                <option value="دايك ">دايك </option>
+                <option value="باوك ">باوك </option>
+                <option value="كچ ">كچ </option>
+                <option value="کوڕ">کوڕ</option>
+                <option value="خوشك">خوشك</option>
+                <option value="وارس">وارس</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail25" style="float:right; font-family: 'Noto Kufi Arabic'">پارێزگا‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="city"
+                   id="inputEmail25">
+
+        </div>
+        <div class="form-row">
+
+            <div class="form-group col-md-3">
+                <label for="inputEmail26" style="float:right; font-family: 'Noto Kufi Arabic'">ژماره‌ى ناسنامه‌ى وارس‌:</label>
+                <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="IDw"
+                       id="inputEmail26">
+            </div>
+            <div class="form-group col-md-1">
+                <label for="inputEmail27" style="float:right; font-family: 'Noto Kufi Arabic'">ڕه‌گه‌زى ‌:</label>
+                <select name="GenderW" value="Gender2" class="form-control">
+                    <option value=""></option>
+                    <option value="نێر">نێر</option>
+                    <option value="مێ">مێ</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputEmail28" style="float:right; font-family: 'Noto Kufi Arabic'">شوێنى زيندانى‌:</label>
+                <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="place"
+                       id="inputEmail28">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputEmail29" style="float:right; font-family: 'Noto Kufi Arabic'">ژماره‌ى مۆبايلى زيندانى ‌:</label>
+                <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="mobile"
+                       id="inputEmail29">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputEmail30" style="float:right; font-family: 'Noto Kufi Arabic'">‌له‌ دايك بوونى زيندانى:</label>
+                <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="DOBZ"
+                       id="inputEmail30">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputEmail31" style="float:right; font-family: 'Noto Kufi Arabic'">شوێنى له‌ دايك بوونى‌:</label>
+                <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="DOBplace"
+                       id="inputEmail31">
+            </div>
+        </div>
+    </div>
+    @* 3 *@
+
+    @* 1 *@
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="inputEmail32" style="float:right; font-family: 'Noto Kufi Arabic'"> له‌ دايك بوونى وارس‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="DOBM"
+                   id="inputEmail32">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail33" style="float:right; font-family: 'Noto Kufi Arabic'">پيشه‌ى ئێستا‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="job1"
+                   id="inputEmail33">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail34" style="float:right; font-family: 'Noto Kufi Arabic'">پيشه‌ى دواى ئازادبوون‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="job2"
+                   id="inputEmail34">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail35" style="float:right; font-family: 'Noto Kufi Arabic'">بايۆمه‌ترى زيندانى‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="bio"
+                   id="inputEmail35">
+        </div>
+    </div>
+    @* 2 *@
+    <div class="form-row">
+
+        <div class="form-group col-md-3">
+
+            <input class="form-check-input-reverse" style="font-family: 'Noto Kufi Arabic'"
+                   type="checkbox" value="false" checked="checked" name="issalary" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1" style="font-family: 'Noto Kufi Arabic'">
+                مووچه‌ى  هه‌يه‌?
+            </label>
+          
+            <label for="inputEmail36" style="margin-right: 30px; font-family: 'Noto Kufi Arabic'"> بڕى مووچه‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="much"
+                   id="inputEmail36">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail37" style="float:right; font-family: 'Noto Kufi Arabic'">ناوى وه‌زاره‌ت/كۆى‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="placesalary"
+                   id="inputEmail37">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail38" style="float:right; font-family: 'Noto Kufi Arabic'">بايۆمه‌ترى مووچه‌ى تر‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="bio2"
+                   id="inputEmail38">
+        </div>
+        <div class="form-group col-md-3">
+
+            <input class="form-check-input-reverse" style="font-family: 'Noto Kufi Arabic'"
+                   type="checkbox" value="false" checked="checked" name="isminha" id="defaultCheck2">
+            <label class="form-check-label" for="defaultCheck2" style="font-family: 'Noto Kufi Arabic'">
+                مينحه‌ى هه‌يه‌?
+            </label>
+         
+            <label for="inputEmail38" style="margin-right: 30px; font-family: 'Noto Kufi Arabic'"> بڕى مينحه‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="mnha"
+                   id="inputEmail38">
+        </div>
+    </div>
+    @* 3 *@
+    <div class="form-row">
+
+        <div class="form-group col-md-1">
+            <label for="inputEmail39" style="float:right; font-family: 'Noto Kufi Arabic'">وه‌جبه‌ى:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="wajba"
+                   id="inputEmail39">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail40" style="float:right; font-family: 'Noto Kufi Arabic'">ناوى بانك‌:</label>
+            <select name="bank" value="bank" class="form-control">
+                <option value=""></option>
+                <option value="بانكى مه‌ڵكه‌ندى/61">بانكى مه‌ڵكه‌ندى/61</option>
+                <option value="بانكى ڕانيه‌/16">بانكى ڕانيه‌/16</option>
+                <option value="بانكى باواجى">بانكى باواجى</option>
+                <option value="بانكى قه‌لادزێ‌/5">بانكى قه‌لادزێ‌/5</option>
+                <option value="بانكى بێخاڵ">بانكى بێخاڵ</option>
+                <option value="بانكى ديلمان">بانكى ديلمان</option>
+                <option value="بانكى سۆلاڤ">بانكى سۆلاڤ</option>
+                <option value="بانكى كه‌لار ‌‌">بانكى كه‌لار ‌‌</option>
+                <option value="بانكى هه‌له‌بجه‌ /3 ‌‌">بانكى هه‌له‌بجه‌ /3 ‌‌</option>
+                <option value="بانكى هيزل">بانكى هيزل</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail41" style="float:right; font-family: 'Noto Kufi Arabic'">ماوه‌ى گيران/ڕۆژ‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="roj"
+                   id="inputEmail41">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail42" style="float:right; font-family: 'Noto Kufi Arabic'">ماوه‌ى گيران/مانگ‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="mang"
+                   id="inputEmail42">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail43" style="float:right; font-family: 'Noto Kufi Arabic'">ماوه‌ى گيران/ساڵ‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="sal"
+                   id="inputEmail43">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputEmail44" style="float:right; font-family: 'Noto Kufi Arabic'">جۆرى زيندانى‌:</label>
+            <select name="joriZendani" value="joriZendani" class="form-control">
+                <option value=""></option>
+                <option value="ئه‌نفال">ئه‌نفال</option>
+                <option value="زيندانى سياسى">زيندانى سياسى</option>
+                <option value="گيراوى سياسى">گيراوى سياسى</option>
+            </select>
+        </div>
+    </div>
+    @* 4 *@
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="inputEmail45" style="float:right; font-family: 'Noto Kufi Arabic'">به‌روارى زيندانى بوون‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="BerwarGiran"
+                   id="inputEmail45">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail46" style="float:right; font-family: 'Noto Kufi Arabic'">به‌روارى ئازاد بوون‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="BerwarAzad"
+                   id="inputEmail46">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail47" style="float:right; font-family: 'Noto Kufi Arabic'">شوێنى زيندانى بوون‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="PlaceZ"
+                   id="inputEmail47">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputEmail48" style="float:right; font-family: 'Noto Kufi Arabic'">هۆكارى ئازاد بوون‌:</label>
+            <input type="text"  style=" font-family:'Noto Naskh Arabic'" class="form-control" name="FreeHokar"
+                   id="inputEmail48">
+        </div>
+    </div>
+    @* 5 *@
+    <center>
+        <div class="form-row">
+            <div class="form-group col-md-5" style="margin-top:10px">
+
+                <input class="form-check-input-reverse" style="font-family: 'Noto Kufi Arabic'"
+                       type="checkbox" value="false" checked="checked" name="education" id="defaultCheck3">
+                <label class="form-check-label" for="defaultCheck3">
+                    خوێندن
+                </label>
+
+
+
+                <input class="form-check-input-reverse" style="font-family: 'Noto Kufi Arabic'"
+                       type="checkbox" value="false" checked="checked" name="zawi" id="defaultCheck4">
+                <label class="form-check-label" for="defaultCheck4">
+                    زه‌وى
+                </label>
+                <input class="form-check-input-reverse" style="font-family: 'Noto Kufi Arabic'"
+                       type="checkbox" value="false" checked="checked" name="house" id="defaultCheck5">
+                <label class="form-check-label" for="defaultCheck5">
+                    خانووبه‌ره‌
+                </label>
+
+                <input class="form-check-input-reverse" style="font-family: 'Noto Kufi Arabic'"
+                       type="checkbox" value="false" checked="checked" name="health" id="defaultCheck6">
+                <label class="form-check-label" for="defaultCheck6">
+                    ‌ته‌ندروستى‌
+                </label>
+
+
+                <input class="form-check-input-reverse" style="font-family: 'Noto Kufi Arabic'"
+                       type="checkbox" name="married"
+                       value="false" checked="checked" id="defaultCheck7">
+                <label class="form-check-label" for="defaultCheck7">
+                    هاوسه‌رگيرى
+                </label>
+            </div>
+            <div class="form-group col-md-3">
+                @*<label for="inputEmail4" style="float:right; font-family: 'Noto Kufi Arabic'">بڕيارى ليژنه‌‌:</label>*@
+                <select name="employer" value="employer" class="form-control">
+                    <option value="بڕيارى ليژنه" disabled>بڕيارى ليژنه</option>
+                    <option value="په‌سه‌ندنه‌كراوه‌">په‌سه‌ندنه‌كراوه‌</option>
+                    <option value="په‌سه‌ندكراو-منحه‌ى نييه‌">په‌سه‌ندكراو-منحه‌ى نييه‌</option>
+                    <option value="په‌سه‌ندكراو-منحه‌ى هه‌يه‌‌">په‌سه‌ندكراو-منحه‌ى هه‌يه‌‌</option>
+                    <option value="به‌خشين‌‌">به‌خشين‌‌</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                @*<label for="inputEmail4" style="float:right; font-family: 'Noto Kufi Arabic'">تێبينى‌:</label>*@
+                <input type="text"  style=" font-family:'Noto Naskh Arabic'" name="note" class="form-control" placeholder="تێبينى‌"
+                       id="inputEmail49">
+            </div>
+        </div>
+    </center>
+    @*  *@
+    @* buttom *@
+<div class="form-row" dir="rtl">
+
+    <div class="form-group col-md-3" style="padding:4px">
+        <p>وێنه‌ى زيندانى‌</p>
+        <img id="img" src="~/logo.jpg"
+             style=" vertical-align: middle;
+       width: 150px; height: 150px; border-radius: 50%;">
+
+        <input class="form-control" id="inp" name="postedFile" type="file" dir="rtl" style="padding:4px" />
+        <script>
+            function readFile() {
+
+                if (!this.files || !this.files[0]) return;
+
+                const FR = new FileReader();
+
+                FR.addEventListener("load", function (evt) {
+                    document.querySelector("#img").src = evt.target.result;
+                    document.querySelector("#b64").textContent = evt.target.result;
+                });
+
+                FR.readAsDataURL(this.files[0]);
+
+            }
+
+            document.querySelector("#inp").addEventListener("change", readFile);
+        </script>
+
+
+        @*  *@
+
+    </div>
+    @*<div class="col-md-2">
+        style="font-family: 'Noto Kufi Arabic'"
+            <img id="img" src="~/logo.jpg"
+                 style=" vertical-align: middle;
+           width: 100px; height: 100px; border-radius: 50%;">
+        </div>*@
+    <div class="col-md-2" style="margin-top: 40px">
+        <button type="submit" class="btn btn-primary"  style="font-family: 'Noto Kufi Arabic'">تۆمار كردن</button>
+    </div>
+
+    @* 2 *@
+
+</div>
+</form>
+
+@*  *@
+
+

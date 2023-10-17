@@ -1,0 +1,41 @@
+﻿.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+
+.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+}
+
+@font-face {
+    font-family: NotoNaskhArabic;
+    src: url("/fonts/NotoNaskhArabic-Bold.ttf");
+    font-family: NotoKufiArabic;
+    src: url("/fonts/NotoKufiArabic-Bold.ttf");
+}
+
+button, p, label {
+    font-size: 15px;
+    font-weight: 400;
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-family: NotoNaskhArabic;
+}
+
+h4, p, label {
+    font-size: 15px;
+    font-weight: 400;
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-family: NotoKufiArabic;
+}
+
